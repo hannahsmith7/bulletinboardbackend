@@ -1,0 +1,36 @@
+GET http://localhost:3000 HTTP/1.1
+###
+GET https://localhost:3000/api/fruits HTTP/1.1
+###
+GET https://localhost:3000/api HTTP/1.1
+###
+POST https://localhost:3000/api/fruits HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJ1c2VyaWQiOiI2NTI1ODk5NmE1YmM3OTYwZDU4NTY0OTQiLCJpYXQiOjE2OTY5NjAxOTUsImV4cCI6MTY5Njk2Mzc5NX0.Gdvex7uaUwVruWp9xTk_mrs-_RmbE9jEJjqsT6dFGaM 
+
+{
+    "id" : "4",
+    "name" : "Pear"
+}
+
+###
+DELETE https://localhost:3000/api/fruits/65258f72a0d01e3558e9ad13 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJ1c2VyaWQiOiI2NTI1ODk5NmE1YmM3OTYwZDU4NTY0OTQiLCJpYXQiOjE2OTY5NjAxOTUsImV4cCI6MTY5Njk2Mzc5NX0.Gdvex7uaUwVruWp9xTk_mrs-_RmbE9jEJjqsT6dFGaM 
+
+###
+POST https://localhost:3000/api/users/signup HTTP/1.1
+content-type: application/json
+
+{
+    "username" : "test",
+    "password" : "youwillneverguess"
+}
+###
+POST https://localhost:3000/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+ "username": "test",
+ "password": "youwillneverguess"
+}
+###
