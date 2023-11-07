@@ -4,8 +4,14 @@ module.exports = (req,res,next)=>
 {
     try{
         const token = req.headers.authorization.split(" ")[1];
-        jwt.verify(token,"secret_this_should_be_longer_than_it_is");
-        next(); //pass control to the next handler
+        console.log(token);
+
+        jwt.verify(token,"secret_this_should_be_longer_than_it_is", (err, decodedToken) => {
+            if (err) return res.sendStatus(403);
+            req.user = decodedToken;
+            console.log(decodedToken);
+            next();
+        });
     }
     catch(error)
     {

@@ -3,12 +3,14 @@ const router = express.Router();
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const expressBrute = require('express-brute')
 
 router.post('/signup', (req, res)=>{
     bcrypt.hash(req.body.password,10)
     .then(hash => {
         const user = new User({
             username: req.body.username,
+            role: req.body.role,
             password: hash
         });
     
@@ -27,7 +29,10 @@ router.post('/signup', (req, res)=>{
  });
 })
 
-router.post('/login', (req, res)=>{
+const store = new expressBrute.MemoryStore();
+const bruteforce = new expressBrute(store);
+
+router.post('/login', bruteforce.prevent, (req, res)=>{
     User.findOne({username:req.body.username})
     .then(fetchedUser=>{
         if(!fetchedUser)
@@ -38,9 +43,12 @@ router.post('/login', (req, res)=>{
                 });
         }
 
-        const token = jwt.sign({username:fetchedUser.username,userid:fetchedUser._id},
+        console.log(req.body.username);
+        console.log(fetchedUser);
+
+        const token = jwt.sign({username:fetchedUser.username,userid:fetchedUser._id,userRole:fetchedUser.role},
             'secret_this_should_be_longer_than_it_is',
-            {expiresIn:'1h'});
+            {expiresIn:'12h'});
 
         res.status(200).json({token:token});
     })
